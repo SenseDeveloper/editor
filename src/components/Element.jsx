@@ -3,43 +3,12 @@ import { useDrag, useDrop } from 'react-dnd';
 import { useEditor } from './EditorContext';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
-
-const renderElement = (type, props) => {
-  switch (type) {
-    case 'text':
-      return (
-        <div style={{ fontSize: props.fontSize, color: props.color }}>
-          {props.content}
-        </div>
-      );
-    case 'button':
-      return (
-        <button
-          style={{
-            backgroundColor: props.bgColor,
-            color: props.color,
-            width: props.width,
-          }}
-        >
-          {props.label}
-        </button>
-      );
-    case 'image':
-      return (
-        <img src={props.src} alt="Element" style={{ width: props.width }} />
-      );
-    default:
-      return null;
-  }
-};
 
 const ElementContainer = styled.div`
   position: absolute;
   left: ${(props) => props.$x}px;
   top: ${(props) => props.$y}px;
-  border: ${(props) =>
-    props.$isSelected ? '2px solid #1976d2' : '1px solid transparent'};
+  border: ${(props) => (props.$isSelected ? '2px solid #1976d2' : '1px solid transparent')};
   padding: 8px;
   margin: 4px 0;
   cursor: move;
@@ -123,4 +92,27 @@ Element.propTypes = {
     y: PropTypes.number,
   }).isRequired,
   onMove: PropTypes.func.isRequired,
+};
+
+const renderElement = (type, props) => {
+  switch (type) {
+    case 'text':
+      return <div style={{ fontSize: props.fontSize, color: props.color }}>{props.content}</div>;
+    case 'button':
+      return (
+        <button
+          style={{
+            backgroundColor: props.bgColor,
+            color: props.color,
+            width: props.width,
+          }}
+        >
+          {props.label}
+        </button>
+      );
+    case 'image':
+      return <img src={props.src} alt="Element" style={{ width: props.width }} />;
+    default:
+      return null;
+  }
 };

@@ -1,31 +1,6 @@
-import React, {
-  createContext,
-  useContext,
-  useReducer,
-  useCallback,
-} from 'react';
+import React, { createContext, useContext, useReducer, useCallback } from 'react';
 import PropTypes from 'prop-types';
-
-const getDefaultProps = (type) => {
-  const defaults = {
-    text: {
-      content: 'New Text',
-      fontSize: 16,
-      color: '#000000',
-    },
-    button: {
-      label: 'Button',
-      bgColor: '#1976d2',
-      color: '#ffffff',
-      width: 120,
-    },
-    image: {
-      src: 'https://via.placeholder.com/150',
-      width: 150,
-    },
-  };
-  return defaults[type] || {};
-};
+import { v4 as uuidv4 } from 'uuid';
 
 const EditorContext = createContext();
 
@@ -40,7 +15,7 @@ const initialState = {
 
 const historyMiddleware = (reducer) => (state, action) => {
   switch (action.type) {
-    case 'UNDO':
+    case 'UNDO': {
       if (state.history.past.length === 0) return state;
       return {
         ...state.history.past[0],
@@ -49,8 +24,8 @@ const historyMiddleware = (reducer) => (state, action) => {
           future: [state, ...state.history.future],
         },
       };
-
-    case 'REDO':
+    }
+    case 'REDO': {
       if (state.history.future.length === 0) return state;
       return {
         ...state.history.future[0],
@@ -59,8 +34,8 @@ const historyMiddleware = (reducer) => (state, action) => {
           future: state.history.future.slice(1),
         },
       };
-
-    default:
+    }
+    default: {
       const newState = reducer(state, action);
       return {
         ...newState,
@@ -69,12 +44,13 @@ const historyMiddleware = (reducer) => (state, action) => {
           future: [],
         },
       };
+    }
   }
 };
 
 const baseReducer = (state, action) => {
   switch (action.type) {
-    case 'ADD_ELEMENT':
+    case 'ADD_ELEMENT': {
       return {
         ...state,
         elements: [
@@ -86,14 +62,14 @@ const baseReducer = (state, action) => {
         ],
         selectedElementId: action.payload.id,
       };
-
-    case 'SELECT_ELEMENT':
+    }
+    case 'SELECT_ELEMENT': {
       return {
         ...state,
         selectedElementId: action.payload,
       };
-
-    case 'UPDATE_ELEMENT':
+    }
+    case 'UPDATE_ELEMENT': {
       return {
         ...state,
         elements: state.elements.map((el) =>
@@ -106,8 +82,8 @@ const baseReducer = (state, action) => {
             : el
         ),
       };
-
-    case 'MOVE_ELEMENT':
+    }
+    case 'MOVE_ELEMENT': {
       return {
         ...state,
         elements: state.elements.map((el) =>
@@ -119,7 +95,7 @@ const baseReducer = (state, action) => {
             : el
         ),
       };
-
+    }
     default:
       return state;
   }
@@ -131,7 +107,7 @@ export const EditorProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const addElement = useCallback((elementType, position) => {
-    const id = crypto.randomUUID();
+    const id = uuidv4();
     dispatch({
       type: 'ADD_ELEMENT',
       payload: {
@@ -170,9 +146,7 @@ export const EditorProvider = ({ children }) => {
     },
   };
 
-  return (
-    <EditorContext.Provider value={value}>{children}</EditorContext.Provider>
-  );
+  return <EditorContext.Provider value={value}>{children}</EditorContext.Provider>;
 };
 
 EditorProvider.propTypes = {
@@ -185,4 +159,25 @@ export const useEditor = () => {
     throw new Error('useEditor must be used within an EditorProvider');
   }
   return context;
+};
+
+const getDefaultProps = (type) => {
+  const defaults = {
+    text: {
+      content: 'New Text',
+      fontSize: 16,
+      color: '#000000',
+    },
+    button: {
+      label: 'Button',
+      bgColor: '#1976d2',
+      color: '#ffffff',
+      width: 120,
+    },
+    image: {
+      src: 'https://via.placeholder.com/150',
+      width: 150,
+    },
+  };
+  return defaults[type] || {};
 };

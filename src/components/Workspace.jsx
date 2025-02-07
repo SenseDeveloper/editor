@@ -4,17 +4,13 @@ import { Element } from './Element';
 import { useEditor } from './EditorContext';
 import styled from 'styled-components';
 import { useCallback, useRef } from 'react';
-import { v4 as uuidv4 } from 'uuid';
-import styled from 'styled-components';
-const id = uuidv4();
 
 const WorkspaceContainer = styled.div`
   position: relative;
   background: white;
   border-radius: 4px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  border: ${(props) =>
-    props.$isOver ? '2px dashed #1976d2' : '1px solid #ddd'};
+  border: ${(props) => (props.$isOver ? '2px dashed #1976d2' : '1px solid #ddd')};
   min-height: 500px;
   overflow: hidden;
 `;
