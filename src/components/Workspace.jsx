@@ -18,7 +18,7 @@ const WorkspaceContainer = styled.div`
   margin: 10px;
 `;
 
-export const Workspace = () => {
+const Workspace = () => {
   const {
     state: { elements },
     actions,
@@ -32,7 +32,7 @@ export const Workspace = () => {
       const rect = containerRef.current.getBoundingClientRect();
 
       actions.addElement(item.type, {
-        x: offset.x - rect.left - 50, // Центрируем элемент
+        x: offset.x - rect.left - 50,
         y: offset.y - rect.top - 20,
       });
     },
@@ -56,3 +56,5 @@ export const Workspace = () => {
     </WorkspaceContainer>
   );
 };
+
+export default Workspace;

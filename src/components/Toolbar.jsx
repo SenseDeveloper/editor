@@ -27,7 +27,11 @@ const Toolbar = () => {
   }));
 
   return (
-    <div style={{ padding: '10px', borderRight: '1px solid #ddd', width: '200px' }}>
+    <div style={{ 
+      padding: '10px', 
+      borderRight: '1px solid #ddd', 
+      width: '200px' 
+    }}>
       <h3>Панель инструментов</h3>
       <div
         ref={textDrag}
