@@ -119,11 +119,7 @@ const renderElement = (type, props) => {
       );
     case 'image':
       return (
-        <img
-          src={props.src}
-          alt="Element"
-          style={{ width: props.width }}
-        />
+        <img src={props.src} alt="Element" style={{ width: props.width }} />
       );
     default:
       return null;

@@ -152,9 +152,7 @@ export const EditorProvider = ({ children }) => {
   };
 
   return (
-    <EditorContext.Provider value={value}>
-      {children}
-    </EditorContext.Provider>
+    <EditorContext.Provider value={value}> {children} </EditorContext.Provider>
   );
 };
 
