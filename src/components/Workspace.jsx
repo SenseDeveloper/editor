@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDrop } from 'react-dnd';
-import { Element } from './Element';
+import { Element } from './Element'; // Импорт остается именованным
 import { useEditor } from './EditorContext';
 import styled from 'styled-components';
 import { useCallback, useRef } from 'react';

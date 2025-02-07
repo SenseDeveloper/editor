@@ -126,4 +126,4 @@ const renderElement = (type, props) => {
   }
 };
 
-export default Element;
+export { Element };
