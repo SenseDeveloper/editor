@@ -1,9 +1,4 @@
-import React, {
-  createContext,
-  useContext,
-  useReducer,
-  useCallback,
-} from 'react';
+import React, { createContext, useContext, useReducer, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -61,11 +56,13 @@ const baseReducer = (state, action) => {
         elements: [
           ...state.elements,
           {
-            ...action.payload,
-            position: { x: action.x, y: action.y },
+            id: uuidv4(),
+            type: action.payload.type,
+            props: getDefaultProps(action.payload.type),
+            position: action.payload.position,
           },
         ],
-        selectedElementId: action.payload.id,
+        selectedElementId: null,
       };
     }
     case 'SELECT_ELEMENT': {
@@ -111,17 +108,10 @@ const reducer = historyMiddleware(baseReducer);
 export const EditorProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const addElement = useCallback((elementType, position) => {
-    const id = uuidv4();
+  const addElement = useCallback((type, position) => {
     dispatch({
       type: 'ADD_ELEMENT',
-      payload: {
-        id,
-        type: elementType,
-        props: getDefaultProps(elementType),
-      },
-      x: position.x,
-      y: position.y,
+      payload: { type, position },
     });
   }, []);
 
@@ -151,9 +141,7 @@ export const EditorProvider = ({ children }) => {
     },
   };
 
-  return (
-    <EditorContext.Provider value={value}> {children} </EditorContext.Provider>
-  );
+  return <EditorContext.Provider value={value}>{children}</EditorContext.Provider>;
 };
 
 EditorProvider.propTypes = {
@@ -171,12 +159,12 @@ export const useEditor = () => {
 const getDefaultProps = (type) => {
   const defaults = {
     text: {
-      content: 'New Text',
+      content: 'Новый текст',
       fontSize: 16,
       color: '#000000',
     },
     button: {
-      label: 'Button',
+      label: 'Кнопка',
       bgColor: '#1976d2',
       color: '#ffffff',
       width: 120,

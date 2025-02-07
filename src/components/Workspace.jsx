@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDrop } from 'react-dnd';
-import { Element } from './Element'; // Импорт остается именованным
+import { Element } from './Element';
 import { useEditor } from './EditorContext';
 import styled from 'styled-components';
 import { useCallback, useRef } from 'react';
@@ -14,6 +14,8 @@ const WorkspaceContainer = styled.div`
     props.$isOver ? '2px dashed #1976d2' : '1px solid #ddd'};
   min-height: 500px;
   overflow: hidden;
+  flex: 1;
+  margin: 10px;
 `;
 
 export const Workspace = () => {

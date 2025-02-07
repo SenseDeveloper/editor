@@ -1,11 +1,21 @@
 import React from 'react';
 import { EditorProvider } from './components/EditorContext';
-import { Workspace } from './components/Workspace';
+import Workspace from './components/Workspace';
+import Toolbar from './components/Toolbar';
+import styled from 'styled-components';
+
+const AppContainer = styled.div`
+  display: flex;
+  height: 100vh;
+`;
 
 function App() {
   return (
     <EditorProvider>
-      <Workspace />
+      <AppContainer>
+        <Toolbar />
+        <Workspace />
+      </AppContainer>
     </EditorProvider>
   );
 }
