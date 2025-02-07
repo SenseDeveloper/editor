@@ -8,7 +8,8 @@ const ElementContainer = styled.div`
   position: absolute;
   left: ${(props) => props.$x}px;
   top: ${(props) => props.$y}px;
-  border: ${(props) => (props.$isSelected ? '2px solid #1976d2' : '1px solid transparent')};
+  border: ${(props) =>
+    props.$isSelected ? '2px solid #1976d2' : '1px solid transparent'};
   padding: 8px;
   margin: 4px 0;
   cursor: move;
@@ -33,7 +34,7 @@ const ResizeHandle = styled.div`
   transition: opacity 0.2s;
 `;
 
-export const Element = React.memo(({ id, type, props, position, onMove }) => {
+const Element = React.memo(({ id, type, props, position, onMove }) => {
   const {
     state: { selectedElementId },
     actions,
@@ -83,6 +84,8 @@ export const Element = React.memo(({ id, type, props, position, onMove }) => {
   );
 });
 
+Element.displayName = 'Element';
+
 Element.propTypes = {
   id: PropTypes.string.isRequired,
   type: PropTypes.oneOf(['text', 'button', 'image']).isRequired,
@@ -97,7 +100,11 @@ Element.propTypes = {
 const renderElement = (type, props) => {
   switch (type) {
     case 'text':
-      return <div style={{ fontSize: props.fontSize, color: props.color }}>{props.content}</div>;
+      return (
+        <div style={{ fontSize: props.fontSize, color: props.color }}>
+          {props.content}
+        </div>
+      );
     case 'button':
       return (
         <button
@@ -111,8 +118,16 @@ const renderElement = (type, props) => {
         </button>
       );
     case 'image':
-      return <img src={props.src} alt="Element" style={{ width: props.width }} />;
+      return (
+        <img
+          src={props.src}
+          alt="Element"
+          style={{ width: props.width }}
+        />
+      );
     default:
       return null;
   }
 };
+
+export default Element;

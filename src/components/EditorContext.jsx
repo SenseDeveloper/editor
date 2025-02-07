@@ -1,4 +1,9 @@
-import React, { createContext, useContext, useReducer, useCallback } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useReducer,
+  useCallback,
+} from 'react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -146,7 +151,11 @@ export const EditorProvider = ({ children }) => {
     },
   };
 
-  return <EditorContext.Provider value={value}>{children}</EditorContext.Provider>;
+  return (
+    <EditorContext.Provider value={value}>
+      {children}
+    </EditorContext.Provider>
+  );
 };
 
 EditorProvider.propTypes = {
